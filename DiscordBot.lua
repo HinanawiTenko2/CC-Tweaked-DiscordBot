@@ -16,11 +16,11 @@ function createBot(token)
     expect('DiscordBot', token, 'string')
 
     local auth = 'Bot ' .. token
-    local header = {['Authorization'] = auth}
-    print(header['Authorization'])
     local _ = {}
 
     function _.send(message, channelID)
+        local header = {['Authorization'] = auth, ['Content-Type'] = 'application/x-www-form-urlencoded'}
+        print(auth)
         expect('send', message, 'string')
         expect('send', channelID, 'string')
         local data = 'content=' .. textutils.urlEncode(message)
