@@ -12,6 +12,14 @@ local function sendHTTP(url, data, headers)
     return false
 end
 
+local function getHTTP(url, headers)
+    local message = http.get(url, headers)
+    if message then
+        return message.readAll()
+    end
+    return false
+end
+
 function createBot(token)
     expect('DiscordBot', token, 'string')
 
@@ -28,5 +36,12 @@ function createBot(token)
         return success
     end
 
+    function _.getMessages(channelID)
+        expect('getMessages', channelID, 'string')
+        local url = 'https://discord.com/api/v10/channels/' .. channelID .. '/messages'
+        local messages = getHTTP(url, header)
+        return messages
+    end
+    
     return _
 end
