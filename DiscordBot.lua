@@ -14,7 +14,9 @@ end
 
 function createBot(token)
     expect('DiscordBot', token, 'string')
-    local header = {['Authorization'] = 'Bot ' .. token}
+
+    local auth = 'Bot ' .. token
+    local header = {['Authorization'] = auth}
     print(header['Authorization'])
     local _ = {}
 
