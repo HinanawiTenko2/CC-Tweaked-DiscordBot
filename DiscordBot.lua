@@ -15,7 +15,7 @@ end
 local function getHTTP(url, headers)
     local message = http.get(url, headers)
     if message then
-        return message.readAll()
+        return textutils.unserialiseJSON(message.readAll())
     end
     return false
 end
