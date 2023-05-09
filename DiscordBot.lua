@@ -15,12 +15,14 @@ end
 function createBot(token)
     expect('DiscordBot', token, 'string')
     local header = {['Authorization'] = 'Bot ' .. token}
+    print(header['Authorization'])
     local _ = {}
 
     function _.send(message, channelID)
         expect('send', message, 'string')
         expect('send', channelID, 'string')
         local data = 'content=' .. textutils.urlEncode(message)
+        print(data)
         local url = 'https://discord.com/api/v10/users/@me/channels/' .. channelID .. '/messages'
         print(url)
         local success, request, message = sendHTTP(url, data, header)
