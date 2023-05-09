@@ -21,7 +21,9 @@ function createBot(token)
         expect('send', message, 'string')
         expect('send', channelID, 'string')
         local data = 'content=' .. textutils.urlEncode(message)
-        local success, request, message = sendHTTP('https://discord.com/api/v10/users/@me/channels/' .. channelID .. '/messages', data, header)
+        local url = 'https://discord.com/api/v10/users/@me/channels/' .. channelID .. '/messages'
+        print(url)
+        local success, request, message = sendHTTP(url, data, header)
         return success, request, message
     end
 
