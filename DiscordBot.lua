@@ -7,9 +7,9 @@ end
 local function sendHTTP(url, data, headers)
     local request, message = http.post(url, data, headers)
     if request then
-        return true
+        return true, request, message
     end
-    return false
+    return false, request, message
 end
 
 function createBot(token)
@@ -21,7 +21,8 @@ function createBot(token)
         expect('send', message, 'string')
         expect('send', channelID, 'string')
         local data = 'content=' .. textutils.urlEncode(message)
-        local success = sendHTTP('https://discord.com/api/v10/users/@me/channels/' .. channelID .. '/messages', data, header)
+        local success, request, message = sendHTTP('https://discord.com/api/v10/users/@me/channels/' .. channelID .. '/messages', data, header)
+        return success, request, message
     end
 
     return _
