@@ -7,28 +7,25 @@ end
 local function sendHTTP(url, data, headers)
     local request, message = http.post(url, data, headers)
     if request then
-        return true, request, message
+        return true
     end
-    return false, request, message
+    return false
 end
 
 function createBot(token)
     expect('DiscordBot', token, 'string')
 
     local auth = 'Bot ' .. token
+    local header = {['Authorization'] = auth}
     local _ = {}
 
     function _.send(message, channelID)
-        local header = {['Authorization'] = auth, ['Content-Type'] = 'application/x-www-form-urlencoded'}
-        print(auth)
         expect('send', message, 'string')
         expect('send', channelID, 'string')
         local data = 'content=' .. textutils.urlEncode(message)
-        print(data)
-        local url = 'https://discord.com/api/v10/users/@me/channels/' .. channelID .. '/messages'
-        print(url)
-        local success, request, message = sendHTTP(url, data, header)
-        return success, request, message
+        local url = 'https://discord.com/api/v10/channels/' .. channelID .. '/messages'
+        local success = sendHTTP(url, data, header)
+        return success
     end
 
     return _
